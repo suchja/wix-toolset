@@ -1,4 +1,4 @@
-FROM debian:wheezy
+FROM debian:jessie
 MAINTAINER Jan Suchotzki <jan@suchotzki.de>
 
 # Install wine
