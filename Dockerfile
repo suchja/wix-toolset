@@ -16,3 +16,11 @@ RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-in
 # the same as wix 3.9 (see here: http://robmensching.com/blog/posts/2014/10/6/wix-v3.9-release-candidate-4/)
 # TODO: Check what is required to build wix-binaries from source
 RUN curl -SL "http://wixtoolset.org/downloads/v3.9.1006.0/wix39-binaries.zip" -o /tmp/wix39-binaries.zip
+
+# Wine really doesn't like to be run as root, so let's set up a non-root
+# environment -> thanks to justmoon (https://github.com/justmoon/docker-wix)
+RUN adduser --home /home/wix --disabled-password --shell /bin/bash --quiet --gecos "user for wix toolset" wix
+USER wix
+ENV HOME /home/wix
+ENV WINEPREFIX /home/wix/.wine
+ENV WINEARCH win32
