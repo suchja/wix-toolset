@@ -3,7 +3,11 @@ MAINTAINER Jan Suchotzki <jan@suchotzki.de>
 
 # Install wine
 RUN dpkg --add-architecture i386
-RUN apt-get update && apt-get install -y --no-install-recommends curl wine \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+				curl \
+				wine \
+#				winetricks \
+				xvfb \
 		&& rm -rf /var/lib/apt/lists/*
 
 # Problem with downloading from codeplex. This downloads wix3.9RC4 which is exactly
