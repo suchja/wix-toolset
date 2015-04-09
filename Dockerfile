@@ -4,7 +4,8 @@ MAINTAINER Jan Suchotzki <jan@suchotzki.de>
 # winetricks is located in the contrib repository
 RUN echo "deb http://http.debian.net/debian jessie contrib" > /etc/apt/sources.list.d/contrib.list
 
-# Install wine and related packagesRUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-install-recommends \
+# Install wine and related packages
+RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-install-recommends \
 				curl \
 				wine \
 				winetricks \
