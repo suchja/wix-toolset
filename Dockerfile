@@ -1,6 +1,8 @@
 FROM debian:jessie
 MAINTAINER Jan Suchotzki <jan@suchotzki.de>
 
+# Inspired by monokrome/wine and justmoon/docker-wix
+
 # winetricks is located in the contrib repository
 RUN echo "deb http://http.debian.net/debian jessie contrib" > /etc/apt/sources.list.d/contrib.list
 
@@ -8,6 +10,7 @@ RUN echo "deb http://http.debian.net/debian jessie contrib" > /etc/apt/sources.l
 RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-install-recommends \
 				curl \
 				wine \
+				wine32 \
 				winetricks \
 				xvfb \
 		&& rm -rf /var/lib/apt/lists/*
@@ -18,9 +21,12 @@ RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-in
 RUN curl -SL "http://wixtoolset.org/downloads/v3.9.1006.0/wix39-binaries.zip" -o /tmp/wix39-binaries.zip
 
 # Wine really doesn't like to be run as root, so let's set up a non-root
-# environment -> thanks to justmoon (https://github.com/justmoon/docker-wix)
+# environment
 RUN adduser --home /home/wix --disabled-password --shell /bin/bash --quiet --gecos "user for wix toolset" wix
 USER wix
 ENV HOME /home/wix
 ENV WINEPREFIX /home/wix/.wine
 ENV WINEARCH win32
+
+# Install .NET Framework 4.0
+# RUN wine wineboot && xvfb-run winetricks --unattended dotnet40 corefonts
