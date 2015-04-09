@@ -13,6 +13,7 @@ RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-in
 				wine32 \
 				winetricks \
 				xvfb \
+				xauth \
 		&& rm -rf /var/lib/apt/lists/*
 
 # Problem with downloading from codeplex. This downloads wix3.9RC4 which is exactly
