@@ -16,6 +16,10 @@ RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-in
 				xauth \
 		&& rm -rf /var/lib/apt/lists/*
 
+# Add xvfb startup script as root
+COPY ./start-xvfb.sh /start-xvfb.sh
+RUN chmod +x /start-xvfb.sh
+
 # Wine really doesn't like to be run as root, so let's set up a non-root
 # environment
 RUN adduser --home /home/wix --disabled-password --shell /bin/bash --quiet --gecos "user for wix toolset" wix
@@ -26,7 +30,7 @@ ENV WINEARCH win32
 
 # Install .NET Framework 4.0
 WORKDIR /home/wix
-RUN wine wineboot && xvfb-run winetricks --unattended dotnet40
+RUN wine wineboot && xvfb-run winetricks --unattended dotnet40 corefonts
 
 # Install wix3.9 binaries
 # Problem with downloading from codeplex. This downloads wix3.9RC4 which is exactly
@@ -38,3 +42,7 @@ RUN mkdir /home/wix/wix \
 		&& curl -SL "http://wixtoolset.org/downloads/v3.9.1006.0/wix39-binaries.zip" -o wix39-binaries.zip \
 		&& unzip wix39-binaries.zip \
 		&& rm -f wix39-binaries.zip
+
+# Finally startup xvfb so wine stops complaining
+
+CMD ["/start-xvfb.sh"]
