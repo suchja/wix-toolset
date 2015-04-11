@@ -32,3 +32,10 @@ ENV WINEARCH win32
 # Install .NET Framework 4.0
 WORKDIR /home/wix
 RUN wine wineboot && xvfb-run winetricks --unattended dotnet40 corefonts
+
+# Install wix3.9 binaries
+RUN mkdir /home/wix/wix \
+		&& cd /home/wix/wix \
+		&& cp /tmp/wix39-binaries.zip /home/wix/wix/wix39-binaries.zip \
+		&& unzip wix39-binaries.zip \
+		&& rm -f wix39-binaries.zip
