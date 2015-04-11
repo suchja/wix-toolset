@@ -16,11 +16,6 @@ RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-in
 				xauth \
 		&& rm -rf /var/lib/apt/lists/*
 
-# Problem with downloading from codeplex. This downloads wix3.9RC4 which is exactly
-# the same as wix 3.9 (see here: http://robmensching.com/blog/posts/2014/10/6/wix-v3.9-release-candidate-4/)
-# TODO: Check what is required to build wix-binaries from source
-RUN curl -SL "http://wixtoolset.org/downloads/v3.9.1006.0/wix39-binaries.zip" -o /tmp/wix39-binaries.zip
-
 # Wine really doesn't like to be run as root, so let's set up a non-root
 # environment
 RUN adduser --home /home/wix --disabled-password --shell /bin/bash --quiet --gecos "user for wix toolset" wix
@@ -31,11 +26,15 @@ ENV WINEARCH win32
 
 # Install .NET Framework 4.0
 WORKDIR /home/wix
-RUN wine wineboot && xvfb-run winetricks --unattended dotnet40 corefonts
+RUN wine wineboot && xvfb-run winetricks --unattended dotnet40
 
 # Install wix3.9 binaries
+# Problem with downloading from codeplex. This downloads wix3.9RC4 which is exactly
+# the same as wix 3.9 (see here: http://robmensching.com/blog/posts/2014/10/6/wix-v3.9-release-candidate-4/)
+# TODO: Check what is required to build wix-binaries from source
+
 RUN mkdir /home/wix/wix \
 		&& cd /home/wix/wix \
-		&& cp /tmp/wix39-binaries.zip /home/wix/wix/wix39-binaries.zip \
+		&& curl -SL "http://wixtoolset.org/downloads/v3.9.1006.0/wix39-binaries.zip" -o wix39-binaries.zip \
 		&& unzip wix39-binaries.zip \
 		&& rm -f wix39-binaries.zip
