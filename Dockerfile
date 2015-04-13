@@ -9,14 +9,18 @@ RUN echo "deb http://http.debian.net/debian jessie contrib" > /etc/apt/sources.l
 # Install wine and related packages
 RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-install-recommends \
 				curl \
+				unzip \
 				msttcorefonts \
 				wine \
 				wine32 \
-				winetricks \
 				xvfb \
 				xauth \
 				x11vnc \
 		&& rm -rf /var/lib/apt/lists/*
+
+# Use the latest version of winetricks
+RUN curl -SL 'http://winetricks.org/winetricks' -o /usr/local/bin/winetricks \
+		&& chmod +x /usr/local/bin/winetricks
 
 # Wine really doesn't like to be run as root, so let's set up a non-root
 # environment
