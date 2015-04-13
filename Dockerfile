@@ -15,6 +15,7 @@ RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-in
 				winetricks \
 				xvfb \
 				xauth \
+				x11vnc \
 		&& rm -rf /var/lib/apt/lists/*
 
 # Wine really doesn't like to be run as root, so let's set up a non-root
