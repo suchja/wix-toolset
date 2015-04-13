@@ -9,6 +9,7 @@ RUN echo "deb http://http.debian.net/debian jessie contrib" > /etc/apt/sources.l
 # Install wine and related packages
 RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-install-recommends \
 				curl \
+				msttcorefonts \
 				wine \
 				wine32 \
 				winetricks \
@@ -26,7 +27,7 @@ ENV WINEARCH win32
 
 # Install .NET Framework 4.0
 WORKDIR /home/wix
-RUN wine wineboot && xvfb-run winetricks --unattended dotnet40 corefonts
+#RUN wine wineboot && winetricks --unattended dotnet40
 
 # Install wix3.9 binaries
 # Problem with downloading from codeplex. This downloads wix3.9RC4 which is exactly
