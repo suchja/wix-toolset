@@ -28,7 +28,7 @@ ENV WINEARCH win32
 
 # Install .NET Framework 4.0
 WORKDIR /home/wix
-#RUN wine wineboot && winetricks --unattended dotnet40
+RUN wine wineboot && winetricks --unattended dotnet40
 
 # Install wix3.9 binaries
 # Problem with downloading from codeplex. This downloads wix3.9RC4 which is exactly
