@@ -13,9 +13,6 @@ RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-in
 				msttcorefonts \
 				wine \
 				wine32 \
-				xvfb \
-				xauth \
-				x11vnc \
 		&& rm -rf /var/lib/apt/lists/*
 
 # Use the latest version of winetricks
