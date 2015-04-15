@@ -3,6 +3,18 @@ MAINTAINER Jan Suchotzki <jan@suchotzki.de>
 
 # Inspired by monokrome/wine and justmoon/docker-wix
 
+# first create user and group for all the X Window stuff
+# required to do this first so have consistent uid/gid between server and client container
+RUN addgroup --system xusers \
+  && adduser \
+			--home /home/wix \
+			--disabled-password \
+			--shell /bin/bash \
+			--gecos "user for wix toolset" \
+			--ingroup xusers \
+			--quiet \
+			wix
+
 # winetricks is located in the contrib repository
 RUN echo "deb http://http.debian.net/debian jessie contrib" > /etc/apt/sources.list.d/contrib.list
 
@@ -19,9 +31,7 @@ RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --no-in
 RUN curl -SL 'http://winetricks.org/winetricks' -o /usr/local/bin/winetricks \
 		&& chmod +x /usr/local/bin/winetricks
 
-# Wine really doesn't like to be run as root, so let's set up a non-root
-# environment
-RUN adduser --home /home/wix --disabled-password --shell /bin/bash --quiet --gecos "user for wix toolset" wix
+# Wine really doesn't like to be run as root, so let's use a non-root user
 USER wix
 ENV HOME /home/wix
 ENV WINEPREFIX /home/wix/.wine
