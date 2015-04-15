@@ -52,3 +52,8 @@ RUN mkdir /home/wix/wix \
 		&& curl -SL "http://wixtoolset.org/downloads/v3.9.1006.0/wix39-binaries.zip" -o wix39-binaries.zip \
 		&& unzip wix39-binaries.zip \
 		&& rm -f wix39-binaries.zip
+
+# During startup we need to prepare connection to X11-Server container
+COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
