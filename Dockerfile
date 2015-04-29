@@ -6,10 +6,10 @@ ENV WINEDEBUG -all,err+all
 
 USER root
 COPY waitonallprocesses.sh /scripts/
-RUN chmod +x /scripts/waitonallprocesses.sh
+RUN chmod +x /scripts/waitonprocess.sh
 
 USER xclient
 # Install .NET Framework 4.0
-RUN (wine wineboot --init & wait) \
-		&& /scripts/waitonallprocesses.sh \
-		&& ps aux	
+RUN wine wineboot --init \
+		&& /scripts/waitonprocess.sh wineserver \
+		&& winetricks --unattended dotnet40 dotnet_verifier
