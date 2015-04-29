@@ -2,6 +2,7 @@
 
 # no wine / windows executables
 *.exe
+*.msi
 
 # no wix binary files
 *.wixobj
