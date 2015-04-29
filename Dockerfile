@@ -1,4 +1,4 @@
-FROM suchja/wine:dev1.7.38
+FROM suchja/wine:latest
 MAINTAINER Jan Suchotzki <jan@suchotzki.de>
 
 # get at least error information from wine
