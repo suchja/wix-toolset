@@ -1,9 +1,25 @@
 ##About
-A Docker Image running [Wine](https://www.winehq.org) and [WiX](http://wixtoolset.org) for creating windows installer packages (msi).
+An easy way to create installer packages (MSIs) for Microsoft Windows directly from your Linux or OS X box. Simply mount or download your WiX project into the image and compile it. Thus you will easily get the MSI.
 
-**ATTENTION:** This image is pretty large (around 1.2GB).
+**ATTENTION:** This image is pretty large (around 1.45GB).
+
+###Provided core packages
+This image provides the following core packages in addition to the ones contained in the parent image(s):
+
+- [WiX Toolset](http://wixtoolset.org) - Creates an MSI from an XML based description
+
+###Docker image structure
+I'm a big fan of the *separation of concerns (SoC)* principle. Therefore I try to create Dockerfiles with mainly one responsibility. Thus it happens that an image is using a base image, which is using another base image, ... Here you see all the base images used for this image:
+
+> [debian:jessie](https://github.com/tianon/docker-brew-debian/blob/188b27233cedf32048ee12378e8f8c6fc0fc0cb4/jessie/Dockerfile) / [ubuntu:14.04](https://github.com/tianon/docker-brew-ubuntu-core/blob/7fef77c821d7f806373c04675358ac6179eaeaf3/trusty/Dockerfile) depending on the chosen Tag.
+>> [suchja/x11client](https://registry.hub.docker.com/u/suchja/x11client/dockerfile/) Display any X Window content in a separate container
+>>> [suchja/wine](https://registry.hub.docker.com/u/suchja/wine/dockerfile/) Run windows applications under Linux or OS X
+>>>> [suchja/wix](https://registry.hub.docker.com/u/suchja/wix/dockerfile/) This image
 
 ##Usage
+Simply run a container from the image in interactive mode, bind-mount a host directory with your source code (i.e. WiX project) or use a data container and then use the WiX toolset from command prompt as you like. Here is an example:
+
+`docker run --rm -it --entrypoint -v $(pwd):/usr/src /bin/bash suchja/wix:latest`
 
 ##Maintenance
 I do not have a dedicated maintenance schedule for this image. In case a new stable version of Wine is released, I might update the image accordingly.
