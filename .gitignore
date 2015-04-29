@@ -1,1 +1,8 @@
 .DS_Store
+
+# no wine / windows executables
+*.exe
+
+# no wix binary files
+*.wixobj
+*.wixpdb
