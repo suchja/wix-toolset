@@ -30,7 +30,13 @@ Once you are in the container you need to do the following:
 
 - Copy an standalone executable into the directory. I'll use the .NET 4.0 Verification tool: `cp ~/.wine/drive_c/windows/system32/netfx_setupverifier.exe ~/wix-example/example.exe`. 
 - Compile the project with candle.exe: `wine ../wix/candle.exe example.wxs`. This creates a new file called `example.wixobj`.
-- Create the MSI by using the linker (light.exe): `wine ../wix/light.exe -sval example.wixobj`
+- Create the MSI by using the linker (light.exe): `wine ../wix/light.exe -sval example.wixobj`. Congratulation! Now you have an `example.msi`.
+
+The `-sval` switch on `light.exe` is required to suppress validation of the created MSI. Here seems to happen some strange stuff with 32- and 64-Bit. Remember, we are using Wine in 32-Bit (x86) mode.
+
+You can even verify that the newly created MSI works by typing: `wine msiexec /i ~/wix-example/example.msi`. This will install "your application". Whether it was successful or not can be verified by `ls -la ~/.wine/drive_c/Program\ Files/`. You should see a folder called `Example` and in there should be an `example.exe`.
+
+If your container is connected to an X Server (e.g. [suchja/x11server](https://registry.hub.docker.com/u/suchja/x11server/)), you can even check Wine's replacement of the "Add/Remove Programs dialog": `wine uninstaller`. This will show you a dialog. In there should be listed a product with the name "Example Product Name".
 
 ##Maintenance
 I do not have a dedicated maintenance schedule for this image. In case a new stable version of WiX toolset is released, I might update the image accordingly.
