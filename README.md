@@ -1,7 +1,7 @@
 ##About
 An easy way to create installer packages (MSIs) for Microsoft Windows directly from your Linux or OS X box. Simply mount or download your WiX project into the image and compile it. Thus you will easily get the MSI.
 
-**ATTENTION:** This image is pretty large (around 1.45GB).
+**ATTENTION:** This image is pretty large (around 1.2GB).
 
 ###Provided core packages
 This image provides the following core packages in addition to the ones contained in the parent image(s):
