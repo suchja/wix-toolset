@@ -11,9 +11,9 @@ This image provides the following core packages in addition to the ones containe
 ###Docker image structure
 I'm a big fan of the *separation of concerns (SoC)* principle. Therefore I try to create Dockerfiles with mainly one responsibility. Thus it happens that an image is using a base image, which is using another base image, ... Here you see all the base images used for this image:
 
-> [debian:jessie](https://github.com/tianon/docker-brew-debian/blob/188b27233cedf32048ee12378e8f8c6fc0fc0cb4/jessie/Dockerfile) / [ubuntu:14.04](https://github.com/tianon/docker-brew-ubuntu-core/blob/7fef77c821d7f806373c04675358ac6179eaeaf3/trusty/Dockerfile) depending on the chosen Tag.
+> [debian:jessie](https://github.com/tianon/docker-brew-debian/blob/188b27233cedf32048ee12378e8f8c6fc0fc0cb4/jessie/Dockerfile) The base image.
 >> [suchja/x11client](https://registry.hub.docker.com/u/suchja/x11client/dockerfile/) Display any X Window content in a separate container
->>> [suchja/wine](https://registry.hub.docker.com/u/suchja/wine/dockerfile/) Run windows applications under Linux or OS X
+>>> [suchja/wine:latest](https://registry.hub.docker.com/u/suchja/wine/dockerfile/) Run windows applications under Linux or OS X
 >>>> [suchja/wix](https://registry.hub.docker.com/u/suchja/wix/dockerfile/) This image
 
 ##Usage
