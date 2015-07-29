@@ -19,7 +19,7 @@ I'm a big fan of the *separation of concerns (SoC)* principle. Therefore I try t
 ##Usage
 Simply run a container from the image in interactive mode, bind-mount a host directory with your source code (i.e. WiX project) or use a data container and then use the WiX toolset from command prompt as you like. Here is an example:
 
-`docker run --rm -it --entrypoint -v $(pwd)/sample-wix-project:/home/xclient/wix-example /bin/bash suchja/wix:latest`
+`docker run --rm -it --entrypoint /bin/bash -v $(pwd)/sample-wix-project:/home/xclient/wix-example suchja/wix:latest`
 
 Assuming you got the complete [git repository](https://github.com/suchja/wix-toolset) for this image and start a container from the root directory of this repository, you will have a running container with the wix example project available in `/home/xclient/wix-example`.
 
